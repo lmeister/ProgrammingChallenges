@@ -32,7 +32,10 @@ public class DiceCombinations {
         System.out.println("Enter an integer between 1 and 10^6");
         int input = scn.nextInt();
 
-        memoized = new long[ input + 7];
+        // Memoization helps decrease the complexity
+        // Without dynamic programming (memoization) we have exponential time
+        // Memoization allows us "free" recursive calls => Linear time, we're still poly
+        memoized = new long[ input + 1];
         memoized[1] = 1L;
         long answer = solve(input);
         System.out.println(answer);
