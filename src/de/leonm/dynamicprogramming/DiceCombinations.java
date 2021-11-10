@@ -1,7 +1,6 @@
+// Has to be removed when submitting to CSES
 package de.leonm.dynamicprogramming;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -29,7 +28,7 @@ public class DiceCombinations {
     public static void main(String[] args) {
 
         Scanner scn = new Scanner(System.in);
-        System.out.println("Enter an integer between 1 and 10^6");
+        //System.out.println("Enter an integer between 1 and 10^6");
         int input = scn.nextInt();
 
         // Memoization helps decrease the complexity
@@ -46,6 +45,7 @@ public class DiceCombinations {
             return 0;
         } else if (input == 0) {
             return 1;
+            // Lookup if we have already calculated the value for this input
         } else if (memoized[input] > 0) {
             return memoized[input];
         }
