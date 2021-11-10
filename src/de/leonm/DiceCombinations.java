@@ -1,5 +1,7 @@
 package de.leonm;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -17,35 +19,40 @@ import java.util.Scanner;
  */
 public class DiceCombinations {
 
+    final static long MODULO = (long) (1E9 + 7);
+
+    /**
+     * This saves the previously calculated results
+     **/
+    static long[] memoized;
 
     public static void main(String[] args) {
+
         Scanner scn = new Scanner(System.in);
         System.out.println("Enter an integer between 1 and 10^6");
-        long input = scn.nextLong();
+        int input = scn.nextInt();
 
-        long answer = bruteForceRecursive(input);
+        memoized = new long[ input + 7];
+        memoized[1] = 1L;
+        long answer = solve(input);
         System.out.println(answer);
     }
 
-    private static long dynamicProgrammingSolution(long input) {
-        long solution = 0;
+    private static long solve(int input) {
+        if (input < 0) {
+            return 0;
+        } else if (input == 0) {
+            return 1;
+        } else if (memoized[input] > 0) {
+            return memoized[input];
+        }
 
+        long solution = 0;
+        for (int firstRoll = 1; firstRoll <= 6; firstRoll++) {
+            solution = solution + solve((input - firstRoll));
+        }
+        memoized[input] = solution;
         return solution;
     }
 
-    private static long bruteForceRecursive(long input) {
-      long solution = 0;
-
-      if (input < 0) {
-        return 0;
-      }
-      if (input == 0) {
-        return 1;
-      }
-
-      for (long firstRoll = 0; firstRoll <= 6; firstRoll++) {
-        solution += bruteForceRecursive(input - firstRoll);
-      }
-      return solution;
-    }
 }
