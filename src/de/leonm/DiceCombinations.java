@@ -49,10 +49,14 @@ public class DiceCombinations {
 
         long solution = 0;
         for (int firstRoll = 1; firstRoll <= 6; firstRoll++) {
-            solution = solution + solve((input - firstRoll));
+            solution = additionModulo(solution, solve((input - firstRoll)));
         }
         memoized[input] = solution;
         return solution;
+    }
+
+    private static long additionModulo(long a, long b) {
+        return (a + b) % MODULO;
     }
 
 }
