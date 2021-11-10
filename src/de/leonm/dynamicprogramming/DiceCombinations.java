@@ -1,4 +1,4 @@
-package de.leonm;
+package de.leonm.dynamicprogramming;
 
 import java.util.ArrayList;
 import java.util.List;
