@@ -42,9 +42,10 @@ public class Node {
             for (int i = 0; i < level + 1; i++) {
                 System.out.print("\t");
             }
-            System.out.println("(" + vertice.getSpeed() + ") " + child.getId());
+            System.out.print("└──");
+            System.out.println(child.getId());
             if (child.children.size() != 0) {
-                child.print(level + 1);
+                child.print(level + 2);
             }
         }
     }

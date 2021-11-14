@@ -46,7 +46,8 @@ public class RoadNetwork {
 
             // Connect parent and child
             int speed = Integer.parseInt(lineFragments[2]);
-            System.out.println("Connecting Parent: " + idParent + " and Child: " + idChild + " with speed: " + speed);
+            System.out.println("Connecting Parent: " + idParent + " and Child: "
+                + idChild + " with speed: " + speed);
             nodeMap.get(idParent).addChild(nodeMap.get(idChild), speed);
         }
 
@@ -62,7 +63,7 @@ public class RoadNetwork {
         // 1. putting a sign (Cost of sign * children is added to total cost)
         // 2. Adjusting the speed to match the subsequent roads/incoming road?
         // -> TODO
-        // Store the results in some form (memoization)
+        // Store the results in some form (memoization) Needed?
         // -> Probably need an equals method for networks? Subtrees are networks in themselves as well?
 
 
@@ -71,7 +72,7 @@ public class RoadNetwork {
     }
 
     public void printNetwork() {
-        System.out.println(this.nodeMap.get(1).getId());
+        System.out.println("\t" + this.nodeMap.get(1).getId());
         this.nodeMap.get(1).print(0);
     }
 
