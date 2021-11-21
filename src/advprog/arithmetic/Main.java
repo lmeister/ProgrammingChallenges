@@ -3,18 +3,23 @@ package advprog.arithmetic;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 public class Main {
     static int counter;
     static Map<Integer, String> resultExpressionMap = new HashMap<>();
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ScriptException {
         Scanner scn = new Scanner(System.in);
+        char[] operators = {'+', '-', ' '};
         System.out.println("Value?");
         int value = scn.nextInt();
 
+        System.out.println("Bruteforce: " + bruteforce(operators, 50));
+        System.out.println("Counter: " + counter);
         counter = 0;
-
         System.out.println("Divide And Conquer: " + divideAndConquer(value, 9, 9));
         System.out.println("Counter: " + counter);
         counter = 0;
@@ -23,6 +28,58 @@ public class Main {
         counter = 0;
         System.out.println("Dynamic Programming: " + dynamicProgramming(value, 9, 9));
         System.out.println("Counter: " + counter);
+
+
+    }
+
+    /**
+     * Bruteforces a math expression that evaluates to the result.
+     * Works with any amount of operators, needs to be adjusted for more digits, though.
+     * @param operators The possible operations as char array
+     * @param target
+     * @return math expression that evaluates to result
+     * @throws ScriptException
+     */
+    private static String bruteforce(char[] operators, int target) throws ScriptException {
+        String expression = "";
+        ScriptEngineManager mgr = new ScriptEngineManager();
+        ScriptEngine engine = mgr.getEngineByName("JavaScript");
+
+        for (int i = 0; i < operators.length; i++) {
+            for (int j = 0; j < operators.length; j++) {
+                for (int k = 0; k < operators.length; k++) {
+                    for (int l = 0; l < operators.length; l++) {
+                        for (int r = 0; r < operators.length; r++) {
+                            for (int t = 0; t < operators.length; t++) {
+                                for (int z = 0; z < operators.length; z++) {
+                                    for (int u = 0; u < operators.length; u++) {
+                                        expression = "1" + operators[i]
+                                            + "2" + operators[j]
+                                            + "3" + operators[k]
+                                            + "4" + operators[l]
+                                            + "5" + operators[r]
+                                            + "6" + operators[t]
+                                            + "7" + operators[z]
+                                            + "8" + operators[u]
+                                            + "9";
+                                        counter++;
+                                        expression = expression.replaceAll("\\s+",""); // remove whitespaces
+                                        if ((int) engine.eval(expression) == target) {
+                                            return expression;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return "No solution found.";
+    }
+
+    private static int eval(String expression) {
+        return 0;
     }
 
     private static String divideAndConquer(int target, int number, Integer tailValue) {
