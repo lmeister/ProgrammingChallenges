@@ -20,11 +20,14 @@ public class Main {
         System.out.println("Bruteforce: " + bruteforce(operators, 50));
         System.out.println("Counter: " + counter);
         counter = 0;
+
         System.out.println("Divide And Conquer: " + divideAndConquer(value, 9, 9));
         System.out.println("Counter: " + counter);
         counter = 0;
+
         System.out.println("Branch and Bound: " + branchAndBound(value, 9, 9));
         System.out.println("Counter: " + counter);
+
         counter = 0;
         System.out.println("Dynamic Programming: " + dynamicProgramming(value, 9, 9));
         System.out.println("Counter: " + counter);
@@ -76,10 +79,6 @@ public class Main {
             }
         }
         return "No solution found.";
-    }
-
-    private static int eval(String expression) {
-        return 0;
     }
 
     private static String divideAndConquer(int target, int number, Integer tailValue) {
