@@ -8,16 +8,17 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class Main {
+
     static int counter;
     static Map<Integer, String> resultExpressionMap = new HashMap<>();
 
-    public static void main(String args[]) throws ScriptException {
+    public static void main(String[] args) throws ScriptException {
         Scanner scn = new Scanner(System.in);
         char[] operators = {'+', '-', ' '};
-        System.out.println("Value?");
+        System.out.println("Target value?");
         int value = scn.nextInt();
 
-        System.out.println("Bruteforce: " + bruteforce(operators, 50));
+        System.out.println("Bruteforce: " + bruteforce(operators, value));
         System.out.println("Counter: " + counter);
         counter = 0;
 
@@ -36,8 +37,9 @@ public class Main {
     }
 
     /**
-     * Bruteforces a math expression that evaluates to the result.
-     * Works with any amount of operators, needs to be adjusted for more digits, though.
+     * Bruteforces a math expression that evaluates to the result. Works with any amount of
+     * operators, needs to be adjusted for more digits, though.
+     *
      * @param operators The possible operations as char array
      * @param target
      * @return math expression that evaluates to result
@@ -66,7 +68,10 @@ public class Main {
                                             + "8" + operators[u]
                                             + "9";
                                         counter++;
-                                        expression = expression.replaceAll("\\s+",""); // remove whitespaces
+                                        expression = expression
+                                            .replaceAll("\\s+", ""); // remove whitespaces
+                                        // Definitely not a good idea to evaluate a string like this
+                                        // Joys of javascript though
                                         if ((int) engine.eval(expression) == target) {
                                             return expression;
                                         }
@@ -94,19 +99,23 @@ public class Main {
         }
 
         // + operator
-        String temp = divideAndConquer(target - tailValue, number - tailValue.toString().length(), number - tailValue.toString().length());
+        String temp = divideAndConquer(target - tailValue, number - tailValue.toString().length(),
+            number - tailValue.toString().length());
         if (temp != null) {
             expression = temp + "+" + tailValue;
             return expression;
         } else {
             // - operator
-            temp = divideAndConquer(target + tailValue, number - tailValue.toString().length(), number - tailValue.toString().length());
+            temp = divideAndConquer(target + tailValue, number - tailValue.toString().length(),
+                number - tailValue.toString().length());
             if (temp != null) {
                 expression = temp + "-" + tailValue;
                 return expression;
             } else {
                 // join operator
-                temp = divideAndConquer(target, number, Integer.valueOf(Integer.toString(Character.getNumericValue(tailValue.toString().charAt(0)) - 1).concat(tailValue.toString())));
+                temp = divideAndConquer(target, number, Integer.valueOf(
+                    Integer.toString(Character.getNumericValue(tailValue.toString().charAt(0)) - 1)
+                        .concat(tailValue.toString())));
                 if (temp != null) {
                     expression = temp;
                     return expression;
@@ -130,28 +139,32 @@ public class Main {
         }
 
         StringBuilder largestJoinNumber = new StringBuilder();
-        for (int i = 1; i <= number ; i++) {
+        for (int i = 1; i <= number; i++) {
             largestJoinNumber.append(i);
         }
-
+        // Check if our targest is larger than the largest number we can generate
         if (Integer.parseInt(largestJoinNumber.toString()) < target) {
             return null;
         }
 
         // + operator
-        String temp = branchAndBound(target - tailValue, number - tailValue.toString().length(), number - tailValue.toString().length());
+        String temp = branchAndBound(target - tailValue, number - tailValue.toString().length(),
+            number - tailValue.toString().length());
         if (temp != null) {
             expression = temp + "+" + tailValue;
             return expression;
         } else {
             // - operator
-            temp = branchAndBound(target + tailValue, number - tailValue.toString().length(), number - tailValue.toString().length());
+            temp = branchAndBound(target + tailValue, number - tailValue.toString().length(),
+                number - tailValue.toString().length());
             if (temp != null) {
                 expression = temp + "-" + tailValue;
                 return expression;
             } else {
                 // join operator
-                temp = branchAndBound(target, number, Integer.valueOf(Integer.toString(Character.getNumericValue(tailValue.toString().charAt(0)) - 1).concat(tailValue.toString())));
+                temp = branchAndBound(target, number, Integer.valueOf(
+                    Integer.toString(Character.getNumericValue(tailValue.toString().charAt(0)) - 1)
+                        .concat(tailValue.toString())));
                 if (temp != null) {
                     expression = temp;
                     return expression;
@@ -162,6 +175,7 @@ public class Main {
         }
     }
 
+    // Doesn't work properly yet
     private static String dynamicProgramming(int target, int number, Integer tailValue) {
         String expression = "";
         counter++;
@@ -180,21 +194,25 @@ public class Main {
         }
 
         // + operator
-        String temp = dynamicProgramming(target - tailValue, number - tailValue.toString().length(), number - tailValue.toString().length());
+        String temp = dynamicProgramming(target - tailValue, number - tailValue.toString().length(),
+            number - tailValue.toString().length());
         if (temp != null) {
             expression = temp + "+" + tailValue;
             resultExpressionMap.put(target, expression);
             return expression;
         } else {
             // - operator
-            temp = dynamicProgramming(target + tailValue, number - tailValue.toString().length(), number - tailValue.toString().length());
+            temp = dynamicProgramming(target + tailValue, number - tailValue.toString().length(),
+                number - tailValue.toString().length());
             if (temp != null) {
                 expression = temp + "-" + tailValue;
                 resultExpressionMap.put(target, expression);
                 return expression;
             } else {
                 // join operator
-                temp = dynamicProgramming(target, number, Integer.valueOf(Integer.toString(Character.getNumericValue(tailValue.toString().charAt(0)) - 1).concat(tailValue.toString())));
+                temp = dynamicProgramming(target, number, Integer.valueOf(
+                    Integer.toString(Character.getNumericValue(tailValue.toString().charAt(0)) - 1)
+                        .concat(tailValue.toString())));
                 if (temp != null) {
                     expression = temp;
                     resultExpressionMap.put(target, expression);
