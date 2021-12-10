@@ -19,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Configuration configuration = new Configuration(500, 200, 0.0, 0.05, 0.3);
+        Configuration configuration = new Configuration(10, 100, 0.0, 0.1, 0.15);
         AbstractMutator mutator = new LegMutator(configuration.getMAX_LENGTH_FACTOR());
         AbstractCrossOverer crossOverer = new LegCombinationCrossOverer(configuration.getMUTATION_RATE(), mutator);
         AbstractEvaluator evaluator = new WobblynessEvaluator();

@@ -32,7 +32,9 @@ public class Optimizer {
         if (isGoalMet(bestTableOfThisGeneration)) {
             return Optional.of(bestTableOfThisGeneration);
         }
-
+        System.out.println("Current generation: INITIAL" +
+                "\n\tBest table: " + bestTableOfThisGeneration +
+                "\n\tFitness: " + tableFitnessMap.get(bestTableOfThisGeneration));
         for (int i = 0; i < configuration.getMaxGenerations(); i++) {
             // Neue Generation bilden & evaluieren
             tableFitnessMap = evolvePopulation();
@@ -54,13 +56,12 @@ public class Optimizer {
     }
 
     private Table findBestTable() {
-        return Collections.max(tableFitnessMap.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
+        return Collections.min(tableFitnessMap.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
     }
 
     private Map<Table, Double> generateInitialPopulation() {
         Random random = new Random();
         Map<Table, Double> initialPopulation = new HashMap<>();
-
         for (int i = 0; i < configuration.getGenerationSize(); i++) {
             int leg1 = (int) (Math.round(random.nextGaussian() * Math.sqrt(configuration.getSTANDARD_DEVIATION())) + configuration.getMEDIAN());
             int leg2 = (int) (Math.round(random.nextGaussian() * Math.sqrt(configuration.getSTANDARD_DEVIATION())) + configuration.getMEDIAN());
@@ -69,7 +70,6 @@ public class Optimizer {
             Table table = new Table(leg1, leg2, leg3, leg4);
             initialPopulation.put(table, this.evaluator.evaluateFitness(table));
         }
-
 
         return initialPopulation;
     }
@@ -83,9 +83,9 @@ public class Optimizer {
 
             Table offspring = this.crossOverer.generateOffspring(parent1, parent2);
             double fitnessOfOffspring = this.evaluator.evaluateFitness(offspring);
-
             newGeneration.put(offspring, fitnessOfOffspring);
         }
+
 
         return newGeneration;
     }

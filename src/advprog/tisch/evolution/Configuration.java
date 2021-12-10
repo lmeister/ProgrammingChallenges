@@ -13,7 +13,7 @@ public class Configuration {
         this.fitnessGoal = fitnessGoal;
         this.generationSize = generationSize;
         this.maxGenerations = maxGenerations;
-        this.tournamentSize = (int) (generationSize * 0.3);
+        this.tournamentSize = (int) (generationSize * 0.4);
         this.MAX_LENGTH_FACTOR = maxLength;
         this.MUTATION_RATE = mutationRate;
     }

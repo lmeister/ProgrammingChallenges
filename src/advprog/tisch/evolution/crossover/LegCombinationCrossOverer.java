@@ -32,13 +32,13 @@ public class LegCombinationCrossOverer extends AbstractCrossOverer{
         for (int i = 0; i < 4; i++) {
             if (random.nextDouble() <= 0.5) {
                 if (i == 0) {
-                    child.setLeg1(parent1.getLeg1());
+                    child.setLeg1(parent2.getLeg1());
                 } else if (i == 1) {
-                    child.setLeg2(parent1.getLeg2());
+                    child.setLeg2(parent2.getLeg2());
                 } else if (i == 2) {
-                    child.setLeg3(parent1.getLeg3());
+                    child.setLeg3(parent2.getLeg3());
                 } else {
-                    child.setLeg4(parent1.getLeg4());
+                    child.setLeg4(parent2.getLeg4());
                 }
             }
         }
