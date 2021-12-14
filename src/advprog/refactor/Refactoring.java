@@ -1,24 +1,14 @@
-package advprog.test;
+package advprog.refactor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Main {
+public class Refactoring {
 
 
     public static void main(String[] args) {
         test_summeAllerUngeraden_1();
         test_summeAllerUngeraden_2();
-    }
-
-    public static void incrementCounter() {
-        long i = 0;
-        long stopTime = System.currentTimeMillis() + 1000;
-        while (System.currentTimeMillis() <= stopTime) {
-            i++;
-        }
-        System.out.println(i);
     }
 
     public static int summeAllerUngeraden(List<Integer> zahlen) {
