@@ -61,31 +61,31 @@
           <text value="Length Deviation:"/>
         </properties>
       </component>
-      <component id="94bc" class="javax.swing.JSpinner" binding="lengthDeviationSpinner" default-binding="true">
+      <component id="94bc" class="javax.swing.JSpinner" binding="lengthDeviationSpinner" custom-create="true" default-binding="true">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="a0555" class="javax.swing.JSpinner" binding="mutationRateSpinner" default-binding="true">
+      <component id="a0555" class="javax.swing.JSpinner" binding="mutationRateSpinner" custom-create="true" default-binding="true">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="7b603" class="javax.swing.JSpinner" binding="tournamentSizeSpinner" default-binding="true">
+      <component id="7b603" class="javax.swing.JSpinner" binding="tournamentSizeSpinner" custom-create="true" default-binding="true">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="e6edd" class="javax.swing.JSpinner" binding="generationSizeSpinner" default-binding="true">
+      <component id="e6edd" class="javax.swing.JSpinner" binding="generationSizeSpinner" custom-create="true" default-binding="true">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="945f8" class="javax.swing.JSpinner" binding="maximumGenerationsSpinner" default-binding="true">
+      <component id="945f8" class="javax.swing.JSpinner" binding="maximumGenerationsSpinner" custom-create="true" default-binding="true">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
