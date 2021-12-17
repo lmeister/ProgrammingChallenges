@@ -1,7 +1,5 @@
 package advprog.tisch.evolution.gui;
 
-import com.sun.tools.javac.Main;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,11 +34,8 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 // Get all configuration data from the spinners
                 // Call the optimizer
-
             }
         });
-
-
     }
 
     public static void main(String[] args) {
@@ -69,6 +64,5 @@ public class MainWindow extends JFrame {
         SpinnerNumberModel maxGenerations = new SpinnerNumberModel(5, 1, 500, 1);
         this.maximumGenerationsSpinner = new JSpinner();
         this.maximumGenerationsSpinner.setModel(maxGenerations);
-
     }
 }
