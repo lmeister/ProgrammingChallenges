@@ -23,32 +23,29 @@ public class Optimizer {
     }
 
 
-    public Optional<Table> optimize() {
+    public List<Table> optimize() {
+        List<Table> bestTables = new ArrayList<>();
         Optional<Table> result = Optional.empty();
         // Startpopulation generieren & evaluieren
         tableFitnessMap = generateInitialPopulation();
 
         Table bestTableOfThisGeneration = findBestTable();
         if (isGoalMet(bestTableOfThisGeneration)) {
-            return Optional.of(bestTableOfThisGeneration);
+            bestTables.add(bestTableOfThisGeneration);
+            return bestTables;
         }
-        System.out.println("Current generation: INITIAL" +
-                "\n\tBest table: " + bestTableOfThisGeneration +
-                "\n\tFitness: " + tableFitnessMap.get(bestTableOfThisGeneration));
+
         for (int i = 0; i < configuration.getMaxGenerations(); i++) {
             // Neue Generation bilden & evaluieren
             tableFitnessMap = evolvePopulation();
 
             bestTableOfThisGeneration = findBestTable();
-            System.out.println("Current generation: " + i +
-                    "\n\tBest table: " + bestTableOfThisGeneration +
-                    "\n\tFitness: " + tableFitnessMap.get(bestTableOfThisGeneration));
+            bestTables.add(bestTableOfThisGeneration);
             if (isGoalMet(bestTableOfThisGeneration)) {
-                result = Optional.of(bestTableOfThisGeneration);
-                break;
+                return bestTables;
             }
         }
-        return result;
+        return bestTables;
     }
 
     private boolean isGoalMet(Table table) {
@@ -93,7 +90,15 @@ public class Optimizer {
     private Table tournamentSelection() {
         List<Table> allTables = new ArrayList<>(tableFitnessMap.keySet());
         Collections.shuffle(allTables);
-        List<Table> tournamentParticipants = allTables.subList(0, configuration.getTournamentSize());
+        List<Table> tournamentParticipants;
+
+        // If tournament size is greater than generation size, simply use entire generation
+        if (configuration.getTournamentSize() > allTables.size() - 1) {
+            tournamentParticipants = new ArrayList<>(allTables);
+        } else {
+            tournamentParticipants = allTables.subList(0, configuration.getTournamentSize());
+        }
+
 
         Table best = tournamentParticipants.get(0);
         for (Table table : tournamentParticipants) {

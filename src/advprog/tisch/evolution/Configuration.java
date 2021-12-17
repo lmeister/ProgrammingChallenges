@@ -9,11 +9,11 @@ public class Configuration {
     private final double MUTATION_RATE;
 
 
-    public Configuration(int generationSize, int maxGenerations, double fitnessGoal, double maxLength, double mutationRate) {
+    public Configuration(int generationSize, int maxGenerations, double fitnessGoal, double maxLength, double mutationRate, int tournamentSize) {
         this.fitnessGoal = fitnessGoal;
         this.generationSize = generationSize;
         this.maxGenerations = maxGenerations;
-        this.tournamentSize = (int) (generationSize * 0.4);
+        this.tournamentSize = tournamentSize;
         this.MAX_LENGTH_FACTOR = maxLength;
         this.MUTATION_RATE = mutationRate;
     }

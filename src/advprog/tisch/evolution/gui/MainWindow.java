@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 
 public class MainWindow extends JFrame {
@@ -49,35 +50,42 @@ public class MainWindow extends JFrame {
             // Get config
             // Start optimizer
 
+            this.setOutputTextArea("");
+
             int generationSize = 10;
             int maxGenerations = 20;
             double lengthDeviation = 0.1;
             double mutationRate = 0.15;
+            double fitnessGoal = 0.0;
+            int tournamentSize = 4;
 
             try {
                 generationSize = getGenerationSpinnerValue();
                 maxGenerations = getMaximumGenerationSpinnerValue();
                 lengthDeviation = getLengthDeviationSpinnerValue();
                 mutationRate = getMutationRateSpinnerValue();
+                tournamentSize = getTournamentSizeSpinnerValue();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
 
-            Configuration configuration = new Configuration(generationSize, maxGenerations, 0.0, lengthDeviation, mutationRate);
+            Configuration configuration = new Configuration(generationSize, maxGenerations, fitnessGoal, lengthDeviation, mutationRate, tournamentSize);
             AbstractMutator mutator = new LegMutator(configuration.getMAX_LENGTH_FACTOR());
             AbstractCrossOverer crossOverer = new LegCombinationCrossOverer(configuration.getMUTATION_RATE(), mutator);
             AbstractEvaluator evaluator = new WobblynessEvaluator();
             Optimizer optimizer = new Optimizer(evaluator, crossOverer, configuration);
 
-            Optional<Table> result = optimizer.optimize();
-
-            if (result.isPresent()) {
-                this.setOutputTextArea("Success!\nResulting Table: " + result.get());
-                System.out.println("Success! Resulting Table:" + result.get());
+            List<Table> result = optimizer.optimize();
+            for (int i = 0; i < result.size(); i++) {
+                double currentFitness = evaluator.evaluateFitness(result.get(i));
+                this.appendOutputText("Fittest Table of Generation " + (i + 1) + ":\n   " + result.get(i) + "\n   Fitness: " + currentFitness + "\n--------------------------------------\n");
+            }
+            Table lastTable = result.get(result.size() - 1);
+            if (evaluator.evaluateFitness(lastTable) == fitnessGoal) {
+                this.appendOutputText("Success!\nPerfect resulting Table: \n   " + lastTable);
             } else {
-                this.setOutputTextArea("No perfect table found. :-(");
-                System.out.println("No perfect table found. :-(");
+                this.appendOutputText("No perfect table found. :-(");
             }
         };
     }
@@ -92,7 +100,7 @@ public class MainWindow extends JFrame {
         this.mutationRateSpinner = new JSpinner();
         this.mutationRateSpinner.setModel(mutationRate);
 
-        SpinnerNumberModel tournamentSize = new SpinnerNumberModel(0.2, 0.0, 1.00, 0.01);
+        SpinnerNumberModel tournamentSize = new SpinnerNumberModel(10, 2, 10000, 1);
         this.tournamentSizeSpinner = new JSpinner();
         this.tournamentSizeSpinner.setModel(tournamentSize);
 
@@ -103,7 +111,6 @@ public class MainWindow extends JFrame {
         SpinnerNumberModel maxGenerations = new SpinnerNumberModel(5, 1, 500, 1);
         this.maximumGenerationsSpinner = new JSpinner();
         this.maximumGenerationsSpinner.setModel(maxGenerations);
-
     }
 
     public void setOutputTextArea(String text) {
@@ -124,9 +131,9 @@ public class MainWindow extends JFrame {
         return (int) this.maximumGenerationsSpinner.getValue();
     }
 
-    public double getTournamentSizeSpinnerValue() throws ParseException {
+    public int getTournamentSizeSpinnerValue() throws ParseException {
         this.tournamentSizeSpinner.commitEdit();
-        return (double) this.tournamentSizeSpinner.getValue();
+        return (int) this.tournamentSizeSpinner.getValue();
     }
 
     public double getMutationRateSpinnerValue() throws ParseException {
