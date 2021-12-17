@@ -6,10 +6,12 @@ import advprog.tisch.evolution.crossover.AbstractCrossOverer;
 import advprog.tisch.evolution.crossover.LegCombinationCrossOverer;
 import advprog.tisch.evolution.evaluation.AbstractEvaluator;
 import advprog.tisch.evolution.evaluation.WobblynessEvaluator;
+import advprog.tisch.evolution.gui.MainWindow;
 import advprog.tisch.evolution.mutation.AbstractMutator;
 import advprog.tisch.evolution.mutation.LegMutator;
 import advprog.tisch.evolution.population.Table;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -18,19 +20,10 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
+        // Create Gui
+        MainWindow mainWindow = new MainWindow("Genetically evolving the Perfect Table");
+        mainWindow.setVisible(true);
 
-        Configuration configuration = new Configuration(10, 100, 0.0, 0.1, 0.15);
-        AbstractMutator mutator = new LegMutator(configuration.getMAX_LENGTH_FACTOR());
-        AbstractCrossOverer crossOverer = new LegCombinationCrossOverer(configuration.getMUTATION_RATE(), mutator);
-        AbstractEvaluator evaluator = new WobblynessEvaluator();
-        Optimizer optimizer = new Optimizer(evaluator, crossOverer, configuration);
-
-        Optional<Table> result = optimizer.optimize();
-        if (result.isPresent()) {
-            System.out.println("Success! Resulting Table:" + result.get());
-        } else {
-            System.out.println("No perfect table found. :-(");
-        }
 
 
 //        //Optimizer optimizer = new Optimizer();
